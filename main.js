@@ -59,7 +59,7 @@ startAnimation1(() => {
 });
 */
 
-
+/*
 // promise chain
 const aliceTumbling = [
   { transform: 'rotate(0) scale(1)' },
@@ -103,3 +103,55 @@ startAnimation1()
   .then(() => {
     console.log("All animations complete");
   });
+*/
+
+
+// async
+const aliceTumbling = [
+  { transform: 'rotate(0) scale(1)' },
+  { transform: 'rotate(360deg) scale(0)' }
+];
+
+const aliceTiming = {
+  duration: 2000,
+  iterations: 1,
+  fill: 'forwards'
+};
+
+const alice1 = document.querySelector("#alice1");
+const alice2 = document.querySelector("#alice2");
+const alice3 = document.querySelector("#alice3");
+
+const startAnimation1 = () => {
+  return new Promise((resolve) => {
+    const animation1 = alice1.animate(aliceTumbling, aliceTiming);
+    animation1.onfinish = resolve;
+  });
+};
+
+const startAnimation2 = () => {
+  return new Promise((resolve) => {
+    const animation2 = alice2.animate(aliceTumbling, aliceTiming);
+    animation2.onfinish = resolve;
+  });
+};
+
+const startAnimation3 = () => {
+  return new Promise((resolve) => {
+    const animation3 = alice3.animate(aliceTumbling, aliceTiming);
+    animation3.onfinish = resolve;
+  });
+};
+
+(async () => {
+  try {
+    await startAnimation1();
+    await startAnimation2();
+    await startAnimation3();
+    console.log("All animations complete");
+  } catch (error) {
+    console.error("Animation error:", error);
+  }
+})();
+
+
